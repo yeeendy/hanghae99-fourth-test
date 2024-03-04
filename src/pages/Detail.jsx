@@ -6,30 +6,35 @@ import { getTodoByID } from "../redux/modules/todos.js";
 
 const Detail = () => {
   const dispatch = useDispatch();
-  const todo = useSelector((state) => state.todos.todo);
+  const todo = useSelector((state) => state.todos.foundData);
 
   const { id } = useParams();
   const navigate = useNavigate();
 
+  useEffect(() => {
+    dispatch(getTodoByID(id));
+  }, [dispatch, id]);
   return (
     <StContainer>
-      <StDialog>
-        <div>
-          <StDialogHeader>
-            <div>ID :{todo.id}</div>
-            <StButton
-              borderColor="#ddd"
-              onClick={() => {
-                navigate("/");
-              }}
-            >
-              이전으로
-            </StButton>
-          </StDialogHeader>
-          <StTitle>{todo.title}</StTitle>
-          <StBody>{todo.body}</StBody>
-        </div>
-      </StDialog>
+      {todo && (
+        <StDialog>
+          <div>
+            <StDialogHeader>
+              <div>ID :{todo.id}</div>
+              <StButton
+                borderColor="#ddd"
+                onClick={() => {
+                  navigate("/");
+                }}
+              >
+                이전으로
+              </StButton>
+            </StDialogHeader>
+            <StTitle>{todo.title}</StTitle>
+            <StBody>{todo.body}</StBody>
+          </div>
+        </StDialog>
+      )}
     </StContainer>
   );
 };
