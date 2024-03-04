@@ -60,7 +60,7 @@ const todos = (state = initialState, action) => {
     case ADD_TODO:
       return {
         ...state,
-        todos: [action.payload],
+        todos: [...state.todos, action.payload],
       };
 
     case TOGGLE_STATUS_TODO:

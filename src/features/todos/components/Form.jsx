@@ -6,6 +6,7 @@ import { addTodo } from "../../../redux/modules/todos.js";
 
 const Form = () => {
   const id = nextId();
+  const dispatch = useDispatch();
 
   const [todo, setTodo] = useState({
     id: 0,
@@ -23,6 +24,21 @@ const Form = () => {
     event.preventDefault();
     if (todo.title.trim() === "" || todo.body.trim() === "") return;
 
+    // 추가하기 부분 수정
+    const newTodo = {
+      id,
+      title: todo.title,
+      body: todo.body,
+      isDone: false,
+    };
+    // input 초기화
+    setTodo({
+      id,
+      title: "",
+      body: "",
+      isDone: false,
+    });
+    dispatch(addTodo(newTodo));
   };
 
   return (
